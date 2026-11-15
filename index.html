@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yurii Bezborodov</title>
+  <meta name="description" content="Yurii Bezborodov: data science projects in machine learning, geospatial modelling, computer vision and analytics.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Yurii Bezborodov</h1>
+    <p class="lead">Data Science graduate (BSc, University of Calgary).</p>
+    <p>
+      My main interests are applied machine learning and clear analysis: setting up the question properly,
+      validating models honestly, and explaining the results to people who aren't data scientists.
+      Below are the projects I've built, with what each one does, how it works, and what I learned.
+    </p>
+    <nav>
+      <a href="Yurii_Bezborodov_cv.pdf">CV (PDF)</a>
+      <a href="mailto:y.bartlos1@gmail.com">y.bartlos1@gmail.com</a>
+      <a href="https://www.linkedin.com/in/yurii-bezborodov">LinkedIn</a>
+      <a href="https://github.com/bartlos-1">GitHub</a>
+    </nav>
+    <p class="location">Calgary, AB</p>
+  </header>
+
+  <main>
+    <h2>Projects</h2>
+
+    <article id="deforestation">
+      <h3>Forest Loss Risk Prediction: Southern Rockies</h3>
+      <p class="meta">Python · Google Earth Engine · XGBoost · Optuna · MapLibre</p>
+      <p>
+        <strong>Question:</strong> for forest that is still standing at the end of a given year, how likely is it
+        to lose tree cover in the next 1, 2 or 3 years? The study area is the southern Rockies along the
+        BC–Alberta border.
+      </p>
+      <p>
+        <strong>How it works:</strong> I build features in Google Earth Engine from Landsat surface reflectance,
+        nearby recent loss, fire history and terrain, then label each location using the Hansen Global Forest
+        Change dataset. One XGBoost model is trained per time horizon. Hyperparameters are tuned with Optuna, and
+        the probabilities are calibrated so they mean what they say. The model then scores a 1&nbsp;km grid of the
+        whole region, and the results are shown on a static web map.
+      </p>
+      <p>
+        <strong>Validation:</strong> I put most of the effort here. Nearby pixels and nearby years look alike,
+        so a random train/test split would give inflated scores. Instead, the data is split both by time
+        (train on 2003–2014, test on 2019 onward) and by space (20% of ~15&nbsp;km blocks are never seen in
+        training). The metrics are reweighted to the real forest population, and the model is compared against
+        simple baselines.
+      </p>
+      <p>
+        <strong>Result:</strong> forest loss is rare (about 1.5% per year), so I judge the model by how well
+        it ranks risk. Among the 1% of locations it rates riskiest, loss happens about <strong>10× more often
+        than average</strong>. The best simple baseline (distance to recent loss) manages about 2×.
+      </p>
+      <p class="links">
+        <a href="https://bartlos-1.github.io/deforestation-prediction/">Live dashboard</a>
+        <a href="https://github.com/bartlos-1/deforestation-prediction">Code</a>
+      </p>
+    </article>
+
+    <article id="lingolens">
+      <h3>LingoLens: Lip Reading with Deep Learning</h3>
+      <p class="meta">Python · TensorFlow / Keras · OpenCV · Streamlit</p>
+      <p>
+        <strong>What it does:</strong> LingoLens takes a silent video of someone speaking and predicts the
+        sentence from their lip movements alone. It is based on the LipNet paper (University of Oxford and
+        Google DeepMind).
+      </p>
+      <p>
+        <strong>How it works:</strong> each video is split into frames, the mouth region is cropped with
+        OpenCV, and the frames are converted to grayscale and normalised. 3D (spatiotemporal) convolutions pick
+        up the shape and motion of the lips across frames. Bidirectional LSTM layers then read the sequence in
+        both directions and turn it into characters. The model was trained on the GRID audio-visual sentence
+        corpus.
+      </p>
+      <p>
+        I also wrote a paper on the method and deployed the model as a Streamlit app where you can try it on
+        sample videos.
+      </p>
+      <p class="links">
+        <a href="https://lingoread.streamlit.app/">Live demo</a>
+        <a href="https://lingopaper.tiiny.site/">Paper</a>
+        <a href="https://github.com/bartlos-1/Lingolens_deployed">Code</a>
+      </p>
+    </article>
+
+    <article id="startups">
+      <h3>Startup Exit Signals</h3>
+      <p class="meta">Python · pandas · Jupyter</p>
+      <p>
+        <strong>Question:</strong> which company and funding characteristics go along with a startup being
+        acquired or going public?
+      </p>
+      <p>
+        <strong>How it works:</strong> using a historical Crunchbase-style dataset, I filtered the records to
+        companies, merged in the acquisition and IPO tables, and created outcome labels (acquired, IPO, any
+        exit). I then compared exit rates by sector, total funding by outcome, and exit rates by number of
+        funding rounds.
+      </p>
+      <p>
+        <strong>Findings:</strong> technical sectors (semiconductors, biotech, security, enterprise) had higher
+        exit rates than consumer/web. IPO companies raised the most and went through the most rounds, closed
+        companies the least, and exit rates rose with funding depth. The write-up is clear about the limits:
+        the data ends around 2014, and these are associations, not causes.
+      </p>
+      <p class="links">
+        <a href="https://github.com/bartlos-1/startup-analysis">Code &amp; notebook</a>
+      </p>
+    </article>
+
+    <article id="taxrag">
+      <h3>TaxRAG: Canadian Income Tax Research Assistant <span class="tag">In progress</span></h3>
+      <p class="meta">Python · PostgreSQL + pgvector · Claude API</p>
+      <p>
+        <strong>Goal:</strong> an assistant that answers personal federal income tax questions and cites its
+        sources for every answer: the <em>Income Tax Act</em>, the Regulations, CRA Income Tax Folios and CRA
+        guides. Dollar amounts that change each year (rates, RRSP/TFSA limits) come from a structured table, so
+        the language model never has to recall a number from memory.
+      </p>
+      <p>
+        <strong>Done so far:</strong> a reproducible corpus download with a provenance record, and a parser
+        that splits the Act and Regulations into about 9,400 citable units and 1,900 defined terms.
+        <strong>Next:</strong> chunking the guides, hybrid (keyword + vector) retrieval, answer generation
+        with citation checks, and an evaluation set.
+      </p>
+      <p class="links">
+        <a href="https://github.com/bartlos-1/canadian-tax-rag">Code</a>
+      </p>
+    </article>
+
+    <article id="salus">
+      <h3>Salus: Food Ingredient Checker</h3>
+      <p class="meta">Next.js · TypeScript · Supabase · Python · Open Food Facts</p>
+      <p>
+        <strong>What it does:</strong> users save their allergens and the ingredients they want to avoid, then
+        scan a product's barcode or a menu item's QR code. The app looks up the ingredients and flags any that
+        match their list, along with whether the item is vegan or vegetarian.
+      </p>
+      <p>
+        <strong>How it works:</strong> a Next.js front end with two views, one for users and one for food
+        facilities that publish their menu items. API routes call a Python scanner, look up products in the
+        Open Food Facts database, and store preferences and menus in Supabase.
+      </p>
+      <p class="links">
+        <a href="https://github.com/bartlos-1/salus">Code</a>
+      </p>
+    </article>
+
+    <article id="feedforward">
+      <h3>FeedForward: Food Redistribution Marketplace</h3>
+      <p class="meta">Python · Django · SQL</p>
+      <p>
+        This was a database course project (CPSC 471). It's a web marketplace where businesses can list surplus
+        food and others can browse and claim it, so less food goes to waste. I designed the relational schema
+        and built the app in Django, with sign-up, a dashboard, browsing and listing pages.
+      </p>
+      <p class="links">
+        <a href="https://github.com/bartlos-1/feedforward">Code &amp; screenshots</a>
+      </p>
+    </article>
+
+    <article id="pecunia">
+      <h3>Pecunia: Expense Tracker</h3>
+      <p class="meta">Java · JavaFX</p>
+      <p>
+        A desktop app I built with a classmate for tracking expenses. You can add, edit and delete
+        transactions with a category and a recurring flag, and see summaries such as top categories, recurring
+        costs and transactions above a threshold. Each wallet is saved as a CSV file.
+      </p>
+      <p class="links">
+        <a href="https://github.com/bartlos-1/Pecunia">Code</a>
+      </p>
+    </article>
+  </main>
+
+  <footer>
+    <p>© 2026 Yurii Bezborodov</p>
+  </footer>
+</body>
+</html>
