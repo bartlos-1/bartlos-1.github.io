@@ -10,11 +10,14 @@
 <body>
   <header>
     <h1>Yurii Bezborodov</h1>
-    <p class="lead">Data Science graduate (BSc, University of Calgary).</p>
+    <p class="lead">Data Science graduate (BSc, University of Calgary, 2026), looking for entry-level data science
+      and machine learning roles.</p>
     <p>
-      My main interests are applied machine learning and clear analysis: setting up the question properly,
-      validating models honestly, and explaining the results to people who aren't data scientists.
-      Below are the projects I've built, with what each one does, how it works, and what I learned.
+      My main project forecasts where forest will be lost in the southern Rockies. The first version scored well
+      and turned out to be wrong: it was detecting old clearings, and its evaluation leaked.
+      <a href="https://github.com/bartlos-1/deforestation-prediction/blob/main/docs/PIPELINE_REVIEW.md">Finding
+      and fixing that</a> taught me more than anything else I've built, and it's why I now start every model
+      with a baseline and a split that matches how the model will be used.
     </p>
     <nav>
       <a href="Yurii_Bezborodov_cv.pdf">CV (PDF)</a>
@@ -30,7 +33,7 @@
 
     <article id="deforestation">
       <h3>Forest Loss Risk Prediction: Southern Rockies</h3>
-      <p class="meta">Python · Google Earth Engine · XGBoost · Optuna · MapLibre</p>
+      <p class="meta">2025–2026 · Python · Google Earth Engine · XGBoost · Optuna · MapLibre</p>
       <p>
         <strong>Question:</strong> for forest that is still standing at the end of a given year, how likely is it
         to lose tree cover in the next 1, 2 or 3 years? The study area is the southern Rockies along the
@@ -66,40 +69,13 @@
       <p class="links">
         <a href="https://bartlos-1.github.io/deforestation-prediction/">Live dashboard</a>
         <a href="https://github.com/bartlos-1/deforestation-prediction">Code</a>
-      </p>
-    </article>
-
-    <article id="lingolens">
-      <h3>LingoLens: Lip Reading with Deep Learning</h3>
-      <p class="meta">Python · TensorFlow / Keras · OpenCV · Streamlit</p>
-      <p>
-        <strong>What it does:</strong> LingoLens takes a silent video of someone speaking and predicts the
-        sentence from their lip movements alone. It is a reimplementation of LipNet (University of Oxford and
-        Google DeepMind), built with a classmate.
-      </p>
-      <p>
-        <strong>How it works:</strong> each video is split into frames, the mouth region is cropped with
-        OpenCV, and the frames are converted to grayscale and normalised. 3D (spatiotemporal) convolutions pick
-        up the shape and motion of the lips across frames. Bidirectional LSTM layers then read the sequence in
-        both directions and turn it into characters, trained with CTC loss. The model was trained on the GRID
-        audio-visual sentence corpus.
-      </p>
-      <p>
-        <strong>Result:</strong> 99% word accuracy on 100 test videos. That number comes from a single-speaker
-        setup (one GRID speaker), so it shows the pipeline works rather than that it generalises to new faces.
-        We co-authored a paper on the method and deployed the model as a Streamlit app where you can try it on
-        sample videos.
-      </p>
-      <p class="links">
-        <a href="https://lingoread.streamlit.app/">Live demo</a>
-        <a href="https://lingopaper.tiiny.site/">Paper</a>
-        <a href="https://github.com/bartlos-1/Lingolens_deployed">Code</a>
+        <a href="https://github.com/bartlos-1/deforestation-prediction/blob/main/docs/PIPELINE_REVIEW.md">What I fixed from v1</a>
       </p>
     </article>
 
     <article id="startups">
       <h3>Startup Exit Signals</h3>
-      <p class="meta">Python · pandas · Jupyter</p>
+      <p class="meta">2026 · Python · pandas · Jupyter</p>
       <p>
         <strong>Question:</strong> which company and funding characteristics go along with a startup being
         acquired or going public?
@@ -121,9 +97,53 @@
       </p>
     </article>
 
+    <article id="lingolens">
+      <h3>LingoLens: Lip Reading with Deep Learning</h3>
+      <p class="meta">2024 · Python · TensorFlow / Keras · OpenCV</p>
+      <p>
+        <strong>What it does:</strong> LingoLens takes a silent video of someone speaking and predicts the
+        sentence from their lip movements alone. It's a university project built with a classmate. The model
+        follows the LipNet architecture (University of Oxford and Google DeepMind), and our implementation started
+        from a public LipNet tutorial in TensorFlow.
+      </p>
+      <p>
+        <strong>How it works:</strong> each video is split into frames, the mouth region is cropped with
+        OpenCV, and the frames are converted to grayscale and normalised. 3D (spatiotemporal) convolutions pick
+        up the shape and motion of the lips across frames. Bidirectional LSTM layers then read the sequence in
+        both directions and turn it into characters, trained with CTC loss. The model was trained on the GRID
+        audio-visual sentence corpus.
+      </p>
+      <p>
+        <strong>Result:</strong> 99% word accuracy on 100 test videos. That number comes from a single-speaker
+        setup (one GRID speaker), so it shows the pipeline works rather than that it generalises to new faces.
+      </p>
+      <p class="links">
+        <a href="https://github.com/bartlos-1/Lingolens_deployed">Code</a>
+      </p>
+    </article>
+
+    <article id="salus">
+      <h3>Salus: Food Ingredient Checker <span class="tag">Hack the Change 2025</span></h3>
+      <p class="meta">2025 · Next.js · TypeScript · Supabase · Python · Open Food Facts</p>
+      <p>
+        Built at Hack the Change 2025. <strong>What it does:</strong> users save their allergens and the ingredients they want to avoid, then
+        scan a product's barcode or a menu item's QR code. The app looks up the ingredients and flags any that
+        match their list, along with whether the item is vegan or vegetarian.
+      </p>
+      <p>
+        <strong>How it works:</strong> a Next.js front end with two views, one for users and one for food
+        facilities that publish their menu items. API routes call a Python scanner, look up products in the
+        Open Food Facts database, and store preferences and menus in Supabase.
+      </p>
+      <p class="links">
+        <a href="https://devpost.com/software/salus-0bchx9">Devpost</a>
+        <a href="https://github.com/bartlos-1/salus">Code</a>
+      </p>
+    </article>
+
     <article id="taxrag">
       <h3>TaxRAG: Canadian Income Tax Research Assistant <span class="tag">In progress</span></h3>
-      <p class="meta">Python · PostgreSQL + pgvector · Claude API</p>
+      <p class="meta">2026 · Python · PostgreSQL + pgvector · Claude API</p>
       <p>
         <strong>Goal:</strong> an assistant that answers personal federal income tax questions and cites its
         sources for every answer: the <em>Income Tax Act</em>, the Regulations, CRA Income Tax Folios and CRA
@@ -141,28 +161,11 @@
       </p>
     </article>
 
-    <article id="salus">
-      <h3>Salus: Food Ingredient Checker <span class="tag">Hack the Change 2025</span></h3>
-      <p class="meta">Next.js · TypeScript · Supabase · Python · Open Food Facts</p>
-      <p>
-        Built at Hack the Change 2025. <strong>What it does:</strong> users save their allergens and the ingredients they want to avoid, then
-        scan a product's barcode or a menu item's QR code. The app looks up the ingredients and flags any that
-        match their list, along with whether the item is vegan or vegetarian.
-      </p>
-      <p>
-        <strong>How it works:</strong> a Next.js front end with two views, one for users and one for food
-        facilities that publish their menu items. API routes call a Python scanner, look up products in the
-        Open Food Facts database, and store preferences and menus in Supabase.
-      </p>
-      <p class="links">
-        <a href="https://devpost.com/software/salus-0bchx9">Devpost</a>
-        <a href="https://github.com/bartlos-1/salus">Code</a>
-      </p>
-    </article>
+    <h2>Earlier work</h2>
 
     <article id="feedforward">
       <h3>FeedForward: Food Redistribution Marketplace</h3>
-      <p class="meta">Python · Django · SQLite · Tailwind</p>
+      <p class="meta">2023 · Python · Django · SQLite · Tailwind</p>
       <p>
         This was a database course project (CPSC 471). It's a web marketplace where businesses can list surplus
         food and others can browse and claim it, so less food goes to waste. I designed the relational schema
@@ -175,7 +178,7 @@
 
     <article id="pecunia">
       <h3>Pecunia: Expense Tracker</h3>
-      <p class="meta">Java · JavaFX</p>
+      <p class="meta">2024 · Java · JavaFX</p>
       <p>
         A desktop app I built with a classmate for tracking expenses. You can add, edit and delete
         transactions with a category and a recurring flag, and see summaries such as top categories, recurring
