@@ -69,3 +69,7 @@ nav a, .links a { margin-right: 18px; font-weight: 500; display: inline-block; }
 .links { margin-bottom: 0; }
 
 footer { color: var(--muted); font-size: 0.85rem; padding-top: 24px; padding-bottom: 48px; border-top: 1px solid var(--line); }
+
+figure { margin: 16px 0; }
+figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 6px; }
+figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }

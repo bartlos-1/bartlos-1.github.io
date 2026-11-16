@@ -52,9 +52,17 @@
       </p>
       <p>
         <strong>Result:</strong> forest loss is rare (about 1.5% per year), so I judge the model by how well
-        it ranks risk. Among the 1% of locations it rates riskiest, loss happens about <strong>10× more often
-        than average</strong>. The best simple baseline (distance to recent loss) manages about 2×.
+        it ranks risk. Among the 1% of locations it rates riskiest, loss happens <strong>10.7× more often
+        than average</strong>. The best simple baseline (distance to recent loss) manages 2.3×.
       </p>
+      <figure>
+        <a href="images/forest-history.jpg"><img src="images/forest-history.jpg" alt="Dashboard History tab: map of observed tree-cover loss across the southern Rockies, 2001–2025, with an annual loss bar chart" loading="lazy"></a>
+        <figcaption>History view: observed tree-cover loss per ~1&nbsp;km cell, 2001–2025, and annual loss for the whole region.</figcaption>
+      </figure>
+      <figure>
+        <a href="images/forest-models.jpg"><img src="images/forest-models.jpg" alt="Dashboard Models tab: PR-AUC of XGBoost compared with logistic, distance and random baselines on held-out data" loading="lazy"></a>
+        <figcaption>Models view: XGBoost vs. baselines on held-out regions and years (2019–2024).</figcaption>
+      </figure>
       <p class="links">
         <a href="https://bartlos-1.github.io/deforestation-prediction/">Live dashboard</a>
         <a href="https://github.com/bartlos-1/deforestation-prediction">Code</a>
@@ -66,18 +74,20 @@
       <p class="meta">Python · TensorFlow / Keras · OpenCV · Streamlit</p>
       <p>
         <strong>What it does:</strong> LingoLens takes a silent video of someone speaking and predicts the
-        sentence from their lip movements alone. It is based on the LipNet paper (University of Oxford and
-        Google DeepMind).
+        sentence from their lip movements alone. It is a reimplementation of LipNet (University of Oxford and
+        Google DeepMind), built with a classmate.
       </p>
       <p>
         <strong>How it works:</strong> each video is split into frames, the mouth region is cropped with
         OpenCV, and the frames are converted to grayscale and normalised. 3D (spatiotemporal) convolutions pick
         up the shape and motion of the lips across frames. Bidirectional LSTM layers then read the sequence in
-        both directions and turn it into characters. The model was trained on the GRID audio-visual sentence
-        corpus.
+        both directions and turn it into characters, trained with CTC loss. The model was trained on the GRID
+        audio-visual sentence corpus.
       </p>
       <p>
-        I also wrote a paper on the method and deployed the model as a Streamlit app where you can try it on
+        <strong>Result:</strong> 99% word accuracy on 100 test videos. That number comes from a single-speaker
+        setup (one GRID speaker), so it shows the pipeline works rather than that it generalises to new faces.
+        We co-authored a paper on the method and deployed the model as a Streamlit app where you can try it on
         sample videos.
       </p>
       <p class="links">
@@ -96,14 +106,14 @@
       </p>
       <p>
         <strong>How it works:</strong> using a historical Crunchbase-style dataset, I filtered the records to
-        companies, merged in the acquisition and IPO tables, and created outcome labels (acquired, IPO, any
-        exit). I then compared exit rates by sector, total funding by outcome, and exit rates by number of
-        funding rounds.
+        about 196,000 companies, merged in the acquisition and IPO tables, and created outcome labels (acquired,
+        IPO, any exit). I then compared exit rates by sector, total funding by outcome, and exit rates by number
+        of funding rounds.
       </p>
       <p>
-        <strong>Findings:</strong> technical sectors (semiconductors, biotech, security, enterprise) had higher
-        exit rates than consumer/web. IPO companies raised the most and went through the most rounds, closed
-        companies the least, and exit rates rose with funding depth. The write-up is clear about the limits:
+        <strong>Findings:</strong> technical sectors had the highest exit rates (semiconductors 30%, against 7%
+        for web). The median IPO company raised $25M; the median closed company raised $0.65M. Exit rates rose
+        from 8% for companies with one funding round to 20% for those with seven or more. The write-up is clear about the limits:
         the data ends around 2014, and these are associations, not causes.
       </p>
       <p class="links">
@@ -132,10 +142,10 @@
     </article>
 
     <article id="salus">
-      <h3>Salus: Food Ingredient Checker</h3>
+      <h3>Salus: Food Ingredient Checker <span class="tag">Hackathon</span></h3>
       <p class="meta">Next.js · TypeScript · Supabase · Python · Open Food Facts</p>
       <p>
-        <strong>What it does:</strong> users save their allergens and the ingredients they want to avoid, then
+        Built at a hackathon. <strong>What it does:</strong> users save their allergens and the ingredients they want to avoid, then
         scan a product's barcode or a menu item's QR code. The app looks up the ingredients and flags any that
         match their list, along with whether the item is vegan or vegetarian.
       </p>
@@ -151,11 +161,11 @@
 
     <article id="feedforward">
       <h3>FeedForward: Food Redistribution Marketplace</h3>
-      <p class="meta">Python · Django · SQL</p>
+      <p class="meta">Python · Django · SQLite · Tailwind</p>
       <p>
         This was a database course project (CPSC 471). It's a web marketplace where businesses can list surplus
         food and others can browse and claim it, so less food goes to waste. I designed the relational schema
-        and built the app in Django, with sign-up, a dashboard, browsing and listing pages.
+        and built the front end in Django and Tailwind, with sign-up, listings, search and chat between users.
       </p>
       <p class="links">
         <a href="https://github.com/bartlos-1/feedforward">Code &amp; screenshots</a>
